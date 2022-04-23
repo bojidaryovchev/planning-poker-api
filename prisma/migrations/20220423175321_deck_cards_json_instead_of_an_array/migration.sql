@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Deck" ALTER COLUMN "cards" SET NOT NULL,
+ALTER COLUMN "cards" SET DATA TYPE TEXT;
