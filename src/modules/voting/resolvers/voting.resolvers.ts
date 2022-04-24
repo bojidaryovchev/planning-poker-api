@@ -1,5 +1,6 @@
-import { Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
 import { Game, Vote, Voting } from '@prisma/client';
+import { PubSub } from 'graphql-subscriptions';
 import { Input } from '../../../decorators/input.decorator';
 import { GameModel } from '../../game/models/game.model';
 import { PrismaService } from '../../prisma/services/prisma.service';
@@ -7,6 +8,8 @@ import { VoteModel } from '../../vote/models/vote.model';
 import { CreateVotingInput } from '../inputs/createVoting.input';
 import { UpdateVotingInput } from '../inputs/updateVoting.input';
 import { VotingModel } from '../models/voting.model';
+
+const pubSub = new PubSub();
 
 @Resolver(VotingModel)
 export class VotingResolvers {
@@ -19,7 +22,7 @@ export class VotingResolvers {
 
   @Mutation(() => VotingModel)
   async createVoting(@Input(CreateVotingInput) { gameId }: CreateVotingInput): Promise<Voting> {
-    return this.prismaService.voting.create({
+    const voting = this.prismaService.voting.create({
       data: {
         game: {
           connect: {
@@ -28,6 +31,10 @@ export class VotingResolvers {
         },
       },
     });
+
+    pubSub.publish('votingCreated', { votingCreated: voting });
+
+    return voting;
   }
 
   @Mutation(() => VotingModel)
@@ -62,5 +69,10 @@ export class VotingResolvers {
         votingId: id,
       },
     });
+  }
+
+  @Subscription(() => VotingModel)
+  votingCreated() {
+    return pubSub.asyncIterator('votingCreated');
   }
 }
