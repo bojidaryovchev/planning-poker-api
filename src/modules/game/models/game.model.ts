@@ -1,10 +1,10 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Game, User } from '@prisma/client';
-import { GameModel } from '../../game/models/game.model';
+import { Deck, User } from '@prisma/client';
+import { DeckModel } from '../../deck/models/deck.model';
 import { UserModel } from '../../user/models/user.model';
 
 @ObjectType()
-export class DeckModel {
+export class GameModel {
   @Field()
   id: string;
 
@@ -15,14 +15,11 @@ export class DeckModel {
   user?: User;
 
   @Field()
-  name: string;
+  deckId: string;
+
+  @Field(() => DeckModel)
+  deck: Deck;
 
   @Field()
-  cards: string;
-
-  @Field(() => Boolean, { nullable: true })
-  isDefault?: boolean;
-
-  @Field(() => [GameModel])
-  games: Game[];
+  name: string;
 }

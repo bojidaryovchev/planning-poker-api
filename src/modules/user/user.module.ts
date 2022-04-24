@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { PrismaModule } from '../prisma/prisma.module';
-import { DeckResolvers } from './resolvers/deck.resolvers';
+import { UserResolver } from './resolvers/user.resolvers';
 
 @Module({
   imports: [PrismaModule],
-  providers: [DeckResolvers],
+  providers: [UserResolver],
 })
-export class DeckModule {}
+export class UserModule {}
