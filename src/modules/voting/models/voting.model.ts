@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql';
 import { Game, Vote } from '@prisma/client';
 import { GameModel } from '../../game/models/game.model';
 import { VoteModel } from '../../vote/models/vote.model';
@@ -17,7 +17,7 @@ export class VotingModel {
   @Field(() => Boolean, { nullable: true })
   hasFinished?: boolean;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => GraphQLISODateTime, { nullable: true })
   createdAt?: string;
 
   @Field(() => [VoteModel])
