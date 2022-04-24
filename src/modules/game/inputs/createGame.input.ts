@@ -1,16 +1,13 @@
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
-export class CreateDeckInput {
+export class CreateGameInput {
   @Field(() => String, { nullable: true })
   userId?: string;
 
   @Field()
-  name: string;
+  deckId: string;
 
   @Field()
-  cards: string;
-
-  @Field(() => Boolean, { nullable: true })
-  isDefault?: boolean;
+  name: string;
 }
