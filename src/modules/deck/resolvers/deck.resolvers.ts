@@ -1,4 +1,4 @@
-import { Mutation, Parent, Query, ResolveField, ResolveProperty, Resolver } from '@nestjs/graphql';
+import { Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { Deck, Game, User } from '@prisma/client';
 import { Input } from '../../../decorators/input.decorator';
 import { GameModel } from '../../game/models/game.model';
@@ -39,6 +39,15 @@ export class DeckResolvers {
     });
   }
 
+  @Mutation(() => DeckModel)
+  async deleteDeck(@Input(DeleteDeckInput) { id }: DeleteDeckInput): Promise<Deck> {
+    return this.prismaService.deck.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
   @ResolveField(() => UserModel, { nullable: true })
   async user(@Parent() deck: Deck): Promise<User> {
     const { userId } = deck;
@@ -54,22 +63,13 @@ export class DeckResolvers {
     });
   }
 
-  @ResolveProperty(() => [GameModel])
+  @ResolveField(() => [GameModel])
   async games(@Parent() deck: Deck): Promise<Game[]> {
     const { id } = deck;
 
     return this.prismaService.game.findMany({
       where: {
         deckId: id,
-      },
-    });
-  }
-
-  @Mutation(() => DeckModel)
-  async deleteDeck(@Input(DeleteDeckInput) { id }: DeleteDeckInput): Promise<Deck> {
-    return this.prismaService.deck.delete({
-      where: {
-        id,
       },
     });
   }
