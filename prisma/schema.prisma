@@ -18,6 +18,12 @@ model User {
   votes Vote[]
 }
 
+model RefreshToken {
+  id           String    @id @default(uuid())
+  refreshToken String    @unique()
+  createdAt    DateTime? @default(now())
+}
+
 model Deck {
   id        String   @id @default(uuid())
   name      String

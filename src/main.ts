@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import config from './config';
+import config from './common/config';
 import { AppModule } from './modules/app.module';
 
 async function bootstrap() {
@@ -8,6 +8,6 @@ async function bootstrap() {
   // Apply global configurations
   await config(app);
   // Start the application
-  await app.listen(3000);
+  await app.listen(Number(process.env.PORT));
 }
 bootstrap();

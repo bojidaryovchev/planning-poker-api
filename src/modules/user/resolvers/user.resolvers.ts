@@ -1,5 +1,8 @@
+import { UseGuards } from '@nestjs/common';
 import { Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { Deck, Game, User, Vote } from '@prisma/client';
+import { CurrentUser } from 'src/common/decorators/currentUser.decorator';
+import { GqlAuthGuard } from 'src/modules/auth/guards/gqlAuth.guard';
 import { DeckModel } from '../../deck/models/deck.model';
 import { GameModel } from '../../game/models/game.model';
 import { PrismaService } from '../../prisma/services/prisma.service';
@@ -11,7 +14,8 @@ export class UserResolver {
   constructor(private prismaService: PrismaService) {}
 
   @Query(() => [UserModel])
-  async listUsers(): Promise<User[]> {
+  @UseGuards(GqlAuthGuard)
+  async listUsers(@CurrentUser() user): Promise<User[]> {
     return this.prismaService.user.findMany({});
   }
 

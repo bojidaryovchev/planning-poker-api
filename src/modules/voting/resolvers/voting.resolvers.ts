@@ -1,7 +1,7 @@
 import { Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
 import { Game, Vote, Voting } from '@prisma/client';
 import { PubSub } from 'graphql-subscriptions';
-import { Input } from '../../../decorators/input.decorator';
+import { Input } from '../../../common/decorators/input.decorator';
 import { GameModel } from '../../game/models/game.model';
 import { PrismaService } from '../../prisma/services/prisma.service';
 import { VoteModel } from '../../vote/models/vote.model';

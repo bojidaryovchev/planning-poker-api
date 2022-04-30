@@ -1,6 +1,6 @@
 import { Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { User, Vote, Voting } from '@prisma/client';
-import { Input } from '../../../decorators/input.decorator';
+import { Input } from '../../../common/decorators/input.decorator';
 import { PrismaService } from '../../prisma/services/prisma.service';
 import { UserModel } from '../../user/models/user.model';
 import { VotingModel } from '../../voting/models/voting.model';
