@@ -1,10 +1,14 @@
 import { INestApplication } from '@nestjs/common';
+import useCookieParser from './useCookieParser';
+import useCors from './useCors';
 import useCsurf from './useCsurf';
 import useHelmet from './useHelmet';
 import usePrisma from './usePrisma';
 
 async function useCommon(app: INestApplication): Promise<void> {
   await usePrisma(app);
+  await useCookieParser(app);
+  await useCors(app);
 }
 
 async function useProduction(app: INestApplication): Promise<void> {

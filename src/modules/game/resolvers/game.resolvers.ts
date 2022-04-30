@@ -1,6 +1,6 @@
 import { Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { Deck, Game, User, Voting } from '@prisma/client';
-import { Input } from '../../../decorators/input.decorator';
+import { Input } from '../../../common/decorators/input.decorator';
 import { DeckModel } from '../../deck/models/deck.model';
 import { PrismaService } from '../../prisma/services/prisma.service';
 import { UserModel } from '../../user/models/user.model';
