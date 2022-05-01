@@ -75,7 +75,19 @@ export class AuthService {
     }
   }
 
-  async logout(res: Response): Promise<void> {
+  async logout(req: Request, res: Response): Promise<void> {
+    const refreshTokenCookie: string = req.cookies[this._refreshTokenCookieIdentifier];
+
+    if (!refreshTokenCookie) {
+      return;
+    }
+
+    await this._prismaService.refreshToken.create({
+      data: {
+        refreshToken: refreshTokenCookie,
+      },
+    });
+
     res.clearCookie(this._refreshTokenCookieIdentifier);
   }
 
